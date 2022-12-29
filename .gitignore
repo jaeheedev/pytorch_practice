@@ -1,0 +1,7 @@
+*.xml
+*.jpg
+*.png
+*.csv
+*.pth
+data/
+MNIST/
