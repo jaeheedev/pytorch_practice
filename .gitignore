@@ -1,6 +1,4 @@
 *.xml
-*.jpg
-*.png
 *.csv
 *.pth
 *.zip
