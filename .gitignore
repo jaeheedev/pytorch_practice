@@ -3,5 +3,7 @@
 *.png
 *.csv
 *.pth
-data/
-MNIST/
+*.zip
+
+data
+MNIST
