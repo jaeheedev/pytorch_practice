@@ -32,7 +32,7 @@ test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-teacher = resnet34(pretrained=False, num_clases=10)
+teacher = resnet34(pretrained=False, num_classes=10)
 teacher.to(device)
 
 lr = 1e-5
@@ -70,7 +70,7 @@ with torch.no_grad():
 class Generator(nn.Module):
     def __init__(self, dims=256, channels = 3):
         super(Generator, self).__init__()
-        self.l1 = nn.Sequential(nn.Liner(dims, 128*8*8))
+        self.l1 = nn.Sequential(nn.Linear(dims, 128*8*8))
         
         self.conv_blocks0 = nn.Sequential(nn.BatchNorm2d(128),)
         self.conv_blocks1 = nn.Sequential(
@@ -141,6 +141,8 @@ for epoch in range(500):
     
     print(f"epoch{epoch}: G_loss {G_loss}")
     
+torch.save(student.state_dict(), "student.pth")
+    
 num_corr = 0
 
 student.load_state_dict(torch.load("student.pth", map_location=device))
@@ -160,7 +162,7 @@ num_corr = 0
 with torch.no_grad():
     for data, label in test_loader:
         output = student(data.to(device))
-        preds = student(data.to(device))
+        preds = output.data.max(1)[1]
         corr = preds.eq(label.to(device).data).sum().item()
         num_corr += corr
     

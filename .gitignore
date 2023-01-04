@@ -6,3 +6,4 @@
 data
 MNIST
 GAN
+cifar10
