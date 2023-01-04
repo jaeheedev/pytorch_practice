@@ -10,11 +10,11 @@ import tqdm
 from torch.utils.data.dataloader import DataLoader
 from torch.optim.adam import Adam
 import matplotlib.pyplot as plt
-from time import time
+import time
 
 class CelebA(Dataset):
     def __init__(self):
-        self.imgs = glob.glob("./GAN/img_align_celeba?*.jpg")
+        self.imgs = glob.glob("./GAN/img_align_celeba/*.jpg")
         
         mean_std = (0.5, 0.5, 0.5)
         
@@ -130,7 +130,7 @@ class Discriminator(nn.Module):
         
         x = self.fc1(x)
         x = self.activation(x)
-        x = self.fc(x)
+        x = self.fc2(x)
         x = self.sigmoid(x)
         
         return x
@@ -193,9 +193,11 @@ for epoch in range(1):
         iterator.set_description(f"epoch: {epoch} G_loss: {GAN_loss} D_loss: {loss_D}")
         
 torch.save(G.state_dict(), "SRGAN_G.pth")
-torch.save(D.satae_dict(), "SRGAN_D.pth")
+torch.save(D.state_dict(), "SRGAN_D.pth")
 
 G.load_state_dict(torch.load("SRGAN_G.pth", map_location=device))
+
+print(time.gmtime(time.time()))
 
 with torch.no_grad():
     low_res, high_res = dataset[0]

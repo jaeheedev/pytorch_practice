@@ -9,7 +9,7 @@ from torch.utils.data.dataloader import DataLoader
 import torch.nn as nn
 import tqdm
 from torch.optim.adam import Adam
-from time import time
+import time
 
 transforms = tf.Compose([
     tf.Resize(64),
@@ -89,8 +89,8 @@ G.apply(weights_init)
 D = Discriminator().to(device)
 D.apply(weights_init)
 
-G_optim = Adam(G.parameters(), lr = 0.0001, betas = (0.5, 0.999))
-D_optim = Adam(D.parameters(), lr = 0.0001, betas=(0.5, 0.999))
+G_optim = Adam(G.parameters(), lr = 0.00008, betas = (0.5, 0.999))
+D_optim = Adam(D.parameters(), lr = 0.00008, betas=(0.5, 0.999))
 
 for epochs in range(50):
     iterator = tqdm.tqdm(enumerate(loader, 0), total=len(loader))
@@ -128,6 +128,8 @@ for epochs in range(50):
         
 torch.save(G.state_dict(), "Generator.pth")
 torch.save(D.state_dict(), "Discriminator.pth")
+
+print(time.gmtime(time.time()))
 
 with torch.no_grad():
     G.load_state_dict(
