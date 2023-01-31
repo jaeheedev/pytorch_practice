@@ -10,4 +10,7 @@ cifar10
 .data
 CIFAR100_data
 MNIST_data
+datasets
+log
 torchgan
+__pycache__
