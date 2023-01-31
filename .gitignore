@@ -8,3 +8,6 @@ MNIST
 GAN
 cifar10
 .data
+CIFAR100_data
+MNIST_data
+torchgan

@@ -10,6 +10,9 @@ from torchvision.transforms import Compose
 from torchvision.transforms import ToTensor, Resize
 from torch.optim.adam import Adam
 from torch.utils.data.dataloader import DataLoader
+from torchvision import datasets, transforms
+from torchvision.transforms.functional import to_tensor
+from torchvision.transforms import AugMix
 
 class Pets(Dataset):
     def __init__(self, path_to_img, path_to_anno, train = True, transforms = None, input_size = (128,128)):
@@ -168,9 +171,18 @@ print(device)
 path_to_annotation = "data/CH07/annotations/trimaps"
 path_to_image = "data/CH07/images"
 
-transform = Compose([Resize((128, 128)),
-                     ToTensor()
-                     ])
+augmix_params = {
+    'severity': 3,
+    'mixture_width': 3,
+    'chain_depth': -1,
+    'alpha': 1.,
+}
+
+transform = Compose([Resize((128, 128)), 
+                    # transforms.RandomHorizontalFlip(),
+                    # transforms.AugMix(**augmix_params),
+                    transforms.ToTensor()
+])
 
 train_set = Pets(path_to_img=path_to_image,
                  path_to_anno=path_to_annotation,

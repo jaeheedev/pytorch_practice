@@ -12,6 +12,8 @@ from torchvision.datasets.mnist import MNIST
 
 import matplotlib.pyplot as plt
 
+
+
 np.random.seed(0)
 torch.manual_seed(0)
 
@@ -149,7 +151,7 @@ class MyViT(nn.Module):
 # Multi-head Self Attention
 # We want, for a single image, each patch to get updated based on some similarity measure with the other patches
 class MyMSA(nn.Module):
-    def __init__(self, d, n_heads = 2):
+    def __init__(self, d, n_heads  = 2):
         super(MyMSA, self).__init__()
         self.d = d
         self.n_heads = n_heads
